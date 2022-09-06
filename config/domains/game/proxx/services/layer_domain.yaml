@@ -1,0 +1,16 @@
+services:
+  _defaults:
+    public: true
+
+  # Factories
+  game.proxx.domain.factory.command:
+    class: Micro\Game\Proxx\Domain\Factory\CommandFactory
+
+  game.proxx.domain.factory.query:
+    class: Micro\Game\Proxx\Domain\Factory\QueryFactory
+
+  game.proxx.domain.factory.entity:
+    class: Micro\Game\Proxx\Domain\Factory\EntityFactory
+
+  game.proxx.domain.factory.read_model:
+    class: Micro\Game\Proxx\Domain\Factory\ReadModelFactory

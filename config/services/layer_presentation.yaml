@@ -1,0 +1,15 @@
+services:
+  _defaults:
+    autowire: true
+    autoconfigure: true
+    public: true
+
+  Micro\Game\Proxx\Presentation\Cli\Command\:
+    resource: '../../src/Proxx/Presentation/Cli/Command'
+
+  Micro\Game\Proxx\Presentation\Cli\Command\GameCommand:
+    arguments:
+      - '@tactician.commandbus.command.game.proxx'
+      - '@game.proxx.domain.factory.command'
+    tags:
+      - { name: console.command }

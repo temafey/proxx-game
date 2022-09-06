@@ -1,0 +1,36 @@
+services:
+  _defaults:
+    autoconfigure: true
+    public: true
+
+  # Data Mapper types
+  common.infrastructure.service.data_mapper.types.array:
+    class: MicroModule\Common\Infrastructure\Service\DataMapper\Types\ArrayType
+
+  common.infrastructure.service.data_mapper.types.boolean:
+    class: MicroModule\Common\Infrastructure\Service\DataMapper\Types\BooleanType
+
+  common.infrastructure.service.data_mapper.types.integer:
+    class: MicroModule\Common\Infrastructure\Service\DataMapper\Types\IntegerType
+
+  common.infrastructure.service.data_mapper.types.json:
+    class: MicroModule\Common\Infrastructure\Service\DataMapper\Types\JsonType
+
+  common.infrastructure.service.data_mapper.types.registry:
+    class: MicroModule\Common\Infrastructure\Service\DataMapper\Types\TypeRegistry
+    calls:
+      - addType: [ '@common.infrastructure.service.data_mapper.types.array' ]
+      - addType: [ '@common.infrastructure.service.data_mapper.types.integer' ]
+      - addType: [ '@common.infrastructure.service.data_mapper.types.boolean' ]
+      - addType: [ '@common.infrastructure.service.data_mapper.types.json' ]
+
+  # Monolog
+  common.infrastructure.service.monolog.processor.custom_tag:
+    class: MicroModule\Common\Infrastructure\Service\Monolog\CustomTagProcessor
+    arguments:
+      - '%app.env%'
+      - '%app.version%'
+      - { service_name: '%app.service_name%' }
+      - [ 'uuid' ]
+    tags:
+      - { name: monolog.processor, handler: sentry }

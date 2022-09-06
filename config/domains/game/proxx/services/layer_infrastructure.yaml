@@ -1,0 +1,25 @@
+services:
+  _defaults:
+    public: true
+
+  # Services
+  game.proxx.infrastructure.service.data_mapper.dbal:
+    class: Micro\Game\Proxx\Infrastructure\Service\DataMapper\DbalDataMapper
+    arguments:
+      - '@common.infrastructure.service.data_mapper.types.registry'
+
+  game.proxx.infrastructure.repository.entity:
+    class: Micro\Game\Proxx\Infrastructure\Repository\EntityStoreRepository
+    arguments:
+      - '@game.proxx.infrastructure.repository.event_sourcing'
+      - '@Broadway\EventStore\Dbal\DBALEventStore'
+      - '@micro_module.snapshotting.snapshot.repository'
+      - '@MicroModule\Snapshotting\Snapshot\Trigger\EventCountTrigger'
+
+  game.proxx.infrastructure.repository.event_sourcing:
+    class: Micro\Game\Proxx\Infrastructure\Repository\EventSourcingStoreRepository
+    arguments:
+      - '@Broadway\EventStore\Dbal\DBALEventStore'
+      - '@broadway.event_handling.event_bus'
+
+

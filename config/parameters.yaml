@@ -1,0 +1,23 @@
+parameters:
+  # Microservice applications
+  global.project.name: '%env(APP_PROJECT_NAME)%'
+  global.acl.name: '%env(APP_ACL_NAME)%'
+  micro.service.name: '%env(APP_SERVICE_NAME)%'
+
+  # App
+  app.env: '%env(APP_ENV)%'
+  app.root_path: !php/const ROOT_PATH
+  app.secret: '%env(APP_SECRET)%'
+  app.version: '%env(APP_VERSION)%'
+  app.service_name: '%micro.service.name%'
+
+  # PostgreSQL
+  db.postgresql.host: '%env(APP_POSTGRESQL_HOST)%'
+  db.postgresql.port: "%env(APP_POSTGRESQL_PORT)%"
+  db.postgresql.dbname: '%env(APP_POSTGRESQL_DB)%'
+  db.postgresql.user: '%env(APP_POSTGRESQL_USER)%'
+  db.postgresql.password: '%env(APP_POSTGRESQL_PASS)%'
+
+  # Nelmio
+  nelmio.cors.allow_origin: '%env(APP_CORS_ALLOW_ORIGIN)%'
+

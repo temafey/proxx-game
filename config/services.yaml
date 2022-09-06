@@ -1,0 +1,49 @@
+imports:
+  - { resource: 'parameters.yaml' }
+
+services:
+  _defaults:
+    autowire: true
+    autoconfigure: true
+    public: false
+
+  # makes classes in src/ available to be used as services
+  # this creates a service per class whose id is the fully-qualified class name
+  MicroModule\Common\:
+    resource: '../src/Common/*'
+    exclude: [
+        '../src/Common/Application/Dto/',
+        '../src/Common/Application/Processor/',
+        '../src/Common/Domain/Command/',
+        '../src/Common/Domain/Entity/',
+        '../src/Common/Domain/Event/',
+        '../src/Common/Domain/Exception/',
+        '../src/Common/Domain/Query/',
+        '../src/Common/Domain/ValueObject/',
+        '../src/Common/Infrastructure/Migrations/',
+        '../src/Common/Infrastructure/Service/Utils/',
+        '../src/Common/Presentation/Cli/',
+        '../src/Common/Infrastructure/Service/Monolog/',
+        '../src/Common/Infrastructure/Service/DataMapper/Types/TypeRegistry.php',
+        '../src/Common/Infrastructure/Repository/QueryLiteRepository.php',
+    ]
+
+  # makes classes in src/ available to be used as services
+  # this creates a service per class whose id is the fully-qualified class name
+  Micro\Game\Proxx\:
+    resource: '../src/Proxx'
+    exclude: [
+        '../src/Proxx/Application/Dto/',
+        '../src/Proxx/Application/CommandHandler/',
+        '../src/Proxx/Domain/Command/',
+        '../src/Proxx/Domain/Entity/',
+        '../src/Proxx/Domain/Event/',
+        '../src/Proxx/Domain/Exception/',
+        '../src/Proxx/Domain/Query/',
+        '../src/Proxx/Domain/ValueObject/',
+        '../src/Proxx/Infrastructure/Migrations/',
+        '../src/Proxx/Infrastructure/Service/',
+        '../src/Proxx/Infrastructure/Repository/',
+        '../src/Proxx/Presentation/Cli/',
+        '../src/Proxx/Infrastructure/Processor/',
+    ]

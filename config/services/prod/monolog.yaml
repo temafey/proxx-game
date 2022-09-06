@@ -1,0 +1,5 @@
+services:
+
+  Symfony\Bridge\Monolog\Processor\WebProcessor:
+    tags:
+      - { name: kernel.event_listener, event: kernel.request }

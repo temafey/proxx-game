@@ -1,0 +1,14 @@
+services:
+
+  json_formatter:
+    class: Monolog\Formatter\JsonFormatter
+
+  monolog.handler.sentry:
+    alias: Sentry\Monolog\Handler
+    public: true
+
+  Sentry\Monolog\Handler:
+    arguments:
+      $hub: '@Sentry\State\HubInterface'
+      $level: !php/const Monolog\Logger::ERROR
+      $bubble: false

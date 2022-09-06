@@ -1,0 +1,75 @@
+services:
+  _defaults:
+    public: true
+
+  # Dto
+  game.proxx.application.dto.factory:
+    class: Micro\Game\Proxx\Application\Dto\Factory\ProxxDtoFactory
+
+  # Default Command handlers
+  game.proxx.application.command_handler.board.create:
+    class: Micro\Game\Proxx\Application\CommandHandler\CreateBoardHandler
+    arguments:
+      - '@game.proxx.infrastructure.repository.entity'
+      - '@game.proxx.domain.factory.entity'
+    tags:
+      - {
+        name: tactician.handler,
+        command: Micro\Game\Proxx\Domain\Command\CreateBoardCommand,
+        bus: command.game.proxx
+      }
+
+  game.proxx.application.command_handler.board.find-black-holes-around:
+    class: Micro\Game\Proxx\Application\CommandHandler\FindBlackHolesAroundHandler
+    arguments:
+      - '@game.proxx.infrastructure.repository.entity'
+    tags:
+      - {
+        name: tactician.handler,
+        command: Micro\Game\Proxx\Domain\Command\FindBlackHolesAroundCommand,
+        bus: command.game.proxx
+      }
+
+  game.proxx.application.command_handler.board.set-black-holes-around-handler:
+    class: Micro\Game\Proxx\Application\CommandHandler\SetBlackHolesAroundHandler
+    arguments:
+      - '@game.proxx.infrastructure.repository.entity'
+    tags:
+      - {
+        name: tactician.handler,
+        command: Micro\Game\Proxx\Domain\Command\SetBlackHolesAroundCommand,
+        bus: command.game.proxx
+      }
+
+  game.proxx.application.command_handler.board.set-cells:
+    class: Micro\Game\Proxx\Application\CommandHandler\SetCellsHandler
+    arguments:
+      - '@game.proxx.infrastructure.repository.entity'
+    tags:
+      - {
+        name: tactician.handler,
+        command: Micro\Game\Proxx\Domain\Command\SetCellsCommand,
+        bus: command.game.proxx
+      }
+
+  game.proxx.application.command_handler.board.open-cell:
+    class: Micro\Game\Proxx\Application\CommandHandler\OpenCellHandler
+    arguments:
+      - '@game.proxx.infrastructure.repository.entity'
+    tags:
+      - {
+        name: tactician.handler,
+        command: Micro\Game\Proxx\Domain\Command\OpenCellCommand,
+        bus: command.game.proxx
+      }
+
+  game.proxx.application.command_handler.board.mark-black-hole-on-cell:
+    class: Micro\Game\Proxx\Application\CommandHandler\MarkBlackHoleOnCellHandler
+    arguments:
+      - '@game.proxx.infrastructure.repository.entity'
+    tags:
+      - {
+        name: tactician.handler,
+        command: Micro\Game\Proxx\Domain\Command\MarkBlackHoleOnCellCommand,
+        bus: command.game.proxx
+      }

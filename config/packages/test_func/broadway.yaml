@@ -1,0 +1,5 @@
+broadway:
+  event_store: Broadway\EventStore\InMemoryEventStore
+  saga:
+    enabled: true
+    state_repository: Micro\Game\Tests\Dummy\Saga\Repository\DBALSagaRepositoryTest

@@ -1,0 +1,28 @@
+includes:
+	- vendor/phpstan/phpstan-mockery/extension.neon
+	- vendor/phpstan/phpstan-phpunit/extension.neon
+	- vendor/phpstan/phpstan-symfony/extension.neon
+
+parameters:
+	parallel:
+	    jobSize: 20
+	    maximumNumberOfProcesses: 32
+	    minimumNumberOfJobsPerProcess: 2
+	    processTimeout: 100.0
+	checkGenericClassInNonGenericObjectType: false
+	checkMissingIterableValueType: false
+	excludes_analyse:
+		- /app/src/Infrastructure/Migrations/*
+		- /app/src/Presentation/Cli/Command/*
+		- /app/tests/Unit/Preprocessor/*
+		- /app/tests/Unit/Mock/*
+	ignoreErrors:
+	    - '#Unsafe usage of new static\(\).#'
+	    - '#Parameter .* of method Poc\\Micro\\\Skeleton\\.* expects Poc\\Micro\\\Skeleton\\Domain\\Entity\\Skeleton\\SkeletonEntity, Poc\\Micro\\\Skeleton\\Domain\\Entity\\Skeleton\\SkeletonReadInterface given\.#'
+	    - '#Property Poc\\Micro\\\Skeleton\\Domain\\Entity\\Skeleton\\SkeletonEntity::.* does not accept MicroModule\\ValueObject\\ValueObjectInterface.#'
+	    - '#Parameter .* constructor expects .*\\ValueObject\\Uuid, MicroModule\\ValueObject\\Identity\\UUID given.#'
+	    - '#Parameter .* constructor expects .* MicroModule\\ValueObject\\ValueObjectInterface given.#'
+	    - '#Method .*ValueObjectFactory.* should return .* but returns .*.#'
+	    - '#Property .* does not accept MicroModule\\ValueObject\\ValueObjectInterface.#'
+	    - '#Property .* does not accept MicroModule\\ValueObject\\StringLiteral.*.#'
+	    - '#Call to an undefined method .*ReadInterface::normalize.*.#'

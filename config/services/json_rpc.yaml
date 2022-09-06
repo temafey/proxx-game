@@ -1,0 +1,5 @@
+services:
+
+  mapping_aware_service:
+    class: MicroModule\Common\Application\Service\MappingCollector
+    tags: [ 'json_rpc_http_server.method_aware' ]

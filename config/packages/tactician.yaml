@@ -1,0 +1,10 @@
+tactician:
+  default_bus: command.game.proxx
+  commandbus:
+    command.game.proxx:
+      middleware:
+        - tactician.middleware.locking
+        - tactician.middleware.logger
+        - tactician.middleware.event
+        - tactician.commandbus.command.game.proxx.middleware.command_handler
+

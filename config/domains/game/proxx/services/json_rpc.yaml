@@ -1,0 +1,38 @@
+#services:
+#  # Common methods
+#  common.presentation.rpc.method.ping:
+#    class: MicroModule\Common\Presentation\Rpc\PingMethod
+#    tags: [ { method: 'ping', name: 'json_rpc_http_server.jsonrpc_method' } ]
+#
+#  # Proxx methods
+#  game.proxx.presentation.rpc.method.add:
+#    class: Micro\Game\Proxx\Presentation\Rpc\ProxxAddMethod
+#    arguments:
+#      - '@tactician.commandbus.command.game.proxx'
+#      - '@game.proxx.domain.factory.command'
+#      - '@game.proxx.application.dto.factory'
+#    tags: [ { method: 'addProxx', name: 'json_rpc_http_server.jsonrpc_method' } ]
+#
+#  game.proxx.presentation.rpc.method.updated:
+#    class: Micro\Game\Proxx\Presentation\Rpc\ProxxUpdateMethod
+#    arguments:
+#      - '@tactician.commandbus.command.game.proxx'
+#      - '@game.proxx.domain.factory.command'
+#      - '@game.proxx.application.dto.factory'
+#    tags: [ { method: 'updateProxx', name: 'json_rpc_http_server.jsonrpc_method' } ]
+#
+#  game.proxx.presentation.rpc.method.delete:
+#    class: Micro\Game\Proxx\Presentation\Rpc\ProxxDeleteMethod
+#    arguments:
+#      - '@tactician.commandbus.command.game.proxx'
+#      - '@game.proxx.domain.factory.command'
+#    tags: [ { method: 'deleteProxx', name: 'json_rpc_http_server.jsonrpc_method' } ]
+#
+#  game.proxx.presentation.rpc.method.fetch_one:
+#    class: Micro\Game\Proxx\Presentation\Rpc\ProxxFetchOneMethod
+#    arguments:
+#      - '@tactician.commandbus.query.game.proxx'
+#      - '@game.proxx.domain.factory.query'
+#    tags: [ { method: 'fetchOneProxx', name: 'json_rpc_http_server.jsonrpc_method' } ]
+#
+#

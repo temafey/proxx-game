@@ -1,0 +1,31 @@
+services:
+  _defaults:
+    public: true
+
+  # Saga
+  broadway.saga.testing.event_collector:
+    class: Broadway\Saga\Testing\EventCollectorListener
+    tags:
+      - { name: broadway.domain.event_listener }
+
+  Broadway\Saga\State\InMemoryRepository: ~
+
+  Broadway\Saga\Testing\TraceableSagaStateRepository:
+    arguments:
+      - '@Broadway\Saga\State\InMemoryRepository'
+
+  # Event Store
+  Broadway\EventStore\InMemoryEventStore: ~
+
+  Broadway\EventStore\Dbal\DBALEventStore: '@Broadway\EventStore\InMemoryEventStore'
+
+  Broadway\EventStore\TraceableEventStore:
+    arguments:
+      - '@Broadway\EventStore\InMemoryEventStore'
+
+  # Event Handling
+  Broadway\EventHandling\SimpleEventBus: ~
+
+  Broadway\EventHandling\TraceableEventBus:
+    arguments:
+      - '@Broadway\EventHandling\SimpleEventBus'

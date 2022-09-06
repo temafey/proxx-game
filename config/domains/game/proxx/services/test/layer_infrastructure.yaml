@@ -1,0 +1,11 @@
+services:
+  _defaults:
+    public: true
+
+  # Repositories
+  game.proxx.infrastructure.repository.storage.read_model.dbal: '@game.proxx.infrastructure.repository.storage.read_model.in_memory'
+
+  game.proxx.infrastructure.repository.storage.read_model.in_memory:
+    class: MicroModule\Common\Infrastructure\Repository\InMemoryReadModelStore
+    arguments:
+      - 'uuid'

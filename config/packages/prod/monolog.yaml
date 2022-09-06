@@ -1,0 +1,22 @@
+monolog:
+  handlers:
+    main:
+      type: fingers_crossed
+      action_level: error
+      handler: nested
+      excluded_404s:
+        # regex: exclude all 404 errors from the logs
+        - ^/
+    nested:
+      type: stream
+      formatter: json_formatter
+      path: "%kernel.logs_dir%/%kernel.environment%.log"
+      level: warning
+    console:
+      type: console
+      process_psr_3_messages: false
+      channels: [ "!event", "!doctrine" ]
+    sentry:
+      type: service
+      level: warning
+      id: Sentry\Monolog\Handler
