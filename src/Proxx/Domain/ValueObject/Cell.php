@@ -69,16 +69,6 @@ class Cell implements Serializable, ValueObjectInterface
     protected ?WasMarked $wasMarked = null;
 
     /**
-     * Return CreatedAt value object.
-     */
-    protected ?CreatedAt $createdAt = null;
-
-    /**
-     * Return UpdatedAt value object.
-     */
-    protected ?UpdatedAt $updatedAt = null;
-
-    /**
      * Make Cell from DTO object or serialized string.
      *
      * @return Cell
@@ -217,14 +207,6 @@ class Cell implements Serializable, ValueObjectInterface
 			$valueObject->wasMarked = WasMarked::fromNative($data['was-marked']);
 		}
 
-		if (isset($data['created_at'])) {
-			$valueObject->createdAt = CreatedAt::fromNative($data['created_at']);
-		}
-
-		if (isset($data['updated_at'])) {
-			$valueObject->updatedAt = UpdatedAt::fromNative($data['updated_at']);
-		}
-
         return $valueObject;
     }
 
@@ -256,14 +238,6 @@ class Cell implements Serializable, ValueObjectInterface
 
 		if (null !== $this->wasMarked) {
 			$data['was-marked'] = $this->wasMarked->toNative();
-		}
-
-		if (null !== $this->createdAt) {
-			$data['created_at'] = $this->createdAt->toNative();
-		}
-
-		if (null !== $this->updatedAt) {
-			$data['updated_at'] = $this->updatedAt->toNative();
 		}
 
         return $data;
@@ -315,22 +289,6 @@ class Cell implements Serializable, ValueObjectInterface
     public function getWasMarked(): ?WasMarked
     {
         return $this->wasMarked;
-    }
-
-    /**
-     * Return CreatedAt value object.
-     */
-    public function getCreatedAt(): ?CreatedAt
-    {
-        return $this->createdAt;
-    }
-
-    /**
-     * Return UpdatedAt value object.
-     */
-    public function getUpdatedAt(): ?UpdatedAt
-    {
-        return $this->updatedAt;
     }
 
 }

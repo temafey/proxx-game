@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Micro\Game\Proxx\Application\CommandHandler;
 
+use Micro\Game\Proxx\Domain\Entity\BoardEntityInterface;
 use MicroModule\Base\Domain\Command\CommandInterface;
 use MicroModule\Common\Application\CommandHandler\CommandHandlerInterface;
 use Micro\Game\Proxx\Domain\Command\OpenCellCommand;
-use Micro\Game\Proxx\Domain\Factory\EntityFactoryInterface;
 use Micro\Game\Proxx\Domain\Repository\EntityStoreRepositoryInterface;
 
 /**
@@ -23,17 +23,11 @@ class OpenCellHandler implements CommandHandlerInterface
     protected EntityStoreRepositoryInterface $entityStoreRepository;
 
     /**
-     * EntityFactory object.
-     */
-    protected EntityFactoryInterface $entityFactory;
-
-    /**
      * Constructor
      */
-    public function __construct(EntityStoreRepositoryInterface $entityStoreRepository, EntityFactoryInterface $entityFactory)
+    public function __construct(EntityStoreRepositoryInterface $entityStoreRepository)
     {
 		$this->entityStoreRepository = $entityStoreRepository;
-		$this->entityFactory = $entityFactory;
         
     }
 
@@ -42,10 +36,12 @@ class OpenCellHandler implements CommandHandlerInterface
 	 *
 	 * @var CommandInterface|OpenCellCommand.
      */
-    public function handle(CommandInterface $openCellCommand): void
+    public function handle(CommandInterface $openCellCommand): BoardEntityInterface
     {
-		$boardEntity = $this->entityFactory->createInstance($openCellCommand->getProcessUuid(), $openCellCommand->getUuid(), $openCellCommand->getPositionX(), $openCellCommand->getPositionY());
+		$boardEntity = $this->entityStoreRepository->get($openCellCommand->getUuid());
+		$boardEntity->openCell($openCellCommand->getProcessUuid(), $openCellCommand->getPositionX(), $openCellCommand->getPositionY());
 		$this->entityStoreRepository->store($boardEntity);
 
+        return $boardEntity;
     }
 }

@@ -6,16 +6,15 @@ namespace Micro\Game\Proxx\Application\CommandHandler;
 
 use MicroModule\Base\Domain\Command\CommandInterface;
 use MicroModule\Common\Application\CommandHandler\CommandHandlerInterface;
-use Micro\Game\Proxx\Domain\Command\SetCellsCommand;
-use Micro\Game\Proxx\Domain\Factory\EntityFactoryInterface;
+use Micro\Game\Proxx\Domain\Command\InstallCellsCommand;
 use Micro\Game\Proxx\Domain\Repository\EntityStoreRepositoryInterface;
 
 /**
- * @class SetCellsHandler
+ * @class InstallCellsHandler
  *
  * @package Micro\Game\Proxx\Application\CommandHandler
  */
-class SetCellsHandler implements CommandHandlerInterface
+class InstallCellsHandler implements CommandHandlerInterface
 {
     /**
      * EntityStoreRepository object.
@@ -23,29 +22,23 @@ class SetCellsHandler implements CommandHandlerInterface
     protected EntityStoreRepositoryInterface $entityStoreRepository;
 
     /**
-     * EntityFactory object.
-     */
-    protected EntityFactoryInterface $entityFactory;
-
-    /**
      * Constructor
      */
-    public function __construct(EntityStoreRepositoryInterface $entityStoreRepository, EntityFactoryInterface $entityFactory)
+    public function __construct(EntityStoreRepositoryInterface $entityStoreRepository)
     {
 		$this->entityStoreRepository = $entityStoreRepository;
-		$this->entityFactory = $entityFactory;
         
     }
 
     /**
      * Handle SetCellsCommand command.
 	 *
-	 * @var CommandInterface|SetCellsCommand.
+	 * @var CommandInterface|InstallCellsCommand.
      */
-    public function handle(CommandInterface $setCellsCommand): void
+    public function handle(CommandInterface $installCellsCommand): void
     {
-		$boardEntity = $this->entityFactory->createInstance($setCellsCommand->getProcessUuid(), $setCellsCommand->getUuid());
+		$boardEntity = $this->entityStoreRepository->get($installCellsCommand->getUuid());
+		$boardEntity->installCells($installCellsCommand->getProcessUuid());
 		$this->entityStoreRepository->store($boardEntity);
-
     }
 }

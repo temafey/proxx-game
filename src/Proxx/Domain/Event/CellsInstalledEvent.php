@@ -5,41 +5,40 @@ declare(strict_types=1);
 namespace Micro\Game\Proxx\Domain\Event;
 
 use Assert\Assertion;
-use Assert\AssertionFailedException;
+use Micro\Game\Proxx\Domain\ValueObject\Cells;
 use MicroModule\Common\Domain\Event\AbstractEvent;
 use MicroModule\Common\Domain\ValueObject\Payload;
 use MicroModule\Common\Domain\ValueObject\ProcessUuid;
 use MicroModule\Common\Domain\ValueObject\Uuid;
-use Micro\Game\Proxx\Domain\ValueObject\Board;
 
 /**
- * @class CellsSetedEvent
+ * @class CellsInstalledEvent
  *
  * @package Micro\Game\Proxx\Domain\Event
  */
-class CellsSetedEvent extends AbstractEvent
+class CellsInstalledEvent extends AbstractEvent
 {
     /**
-     * Board value object.
+     * Cells value object.
      */
-    protected Board $board;
+    protected Cells $cells;
 
     /**
      * Constructor
      */
-    public function __construct(ProcessUuid $processUuid, Uuid $uuid, Board $board, ?Payload $payload = null)
+    public function __construct(ProcessUuid $processUuid, Uuid $uuid, Cells $cells, ?Payload $payload = null)
     {
-		$this->board = $board;
+		$this->cells = $cells;
 		parent::__construct($processUuid, $uuid, $payload);
         
     }
 
     /**
-     * Return Board value object.
+     * Return cells array.
      */
-    public function getBoard(): Board
+    public function getCells(): Cells
     {
-        return $this->board;
+        return $this->cells;
     }
 
     /**
@@ -49,11 +48,11 @@ class CellsSetedEvent extends AbstractEvent
     {
 		Assertion::keyExists($data, 'process_uuid');
 		Assertion::keyExists($data, 'uuid');
-		Assertion::keyExists($data, 'board');
+		Assertion::keyExists($data, 'cells');
 		$event = new static(
 			ProcessUuid::fromNative($data['process_uuid']),
 			Uuid::fromNative($data['uuid']),
-			Board::fromNative($data['board'])
+            Cells::fromArray($data['cells']),
 		);
 
 		if (isset($data['payload'])) {
@@ -71,7 +70,7 @@ class CellsSetedEvent extends AbstractEvent
 		$data = [
 			'process_uuid' => $this->getProcessUuid()->toNative(),
 			'uuid' => $this->getUuid()->toNative(),
-			'board' => $this->getBoard()->toNative()
+			'cells' => $this->getCells()->toNative(),
 		];
 
 		if ($this->payload !== null) {

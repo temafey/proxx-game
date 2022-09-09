@@ -4,17 +4,18 @@ declare(strict_types=1);
 
 namespace Micro\Game\Proxx\Application\CommandHandler;
 
+use Micro\Game\Proxx\Domain\Command\ProcessGameCommand;
+use Micro\Game\Proxx\Domain\Entity\BoardEntityInterface;
 use MicroModule\Base\Domain\Command\CommandInterface;
 use MicroModule\Common\Application\CommandHandler\CommandHandlerInterface;
-use Micro\Game\Proxx\Domain\Command\CalculateBlackHolesAroundCommand;
 use Micro\Game\Proxx\Domain\Repository\EntityStoreRepositoryInterface;
 
 /**
- * @class FindBlackHolesAroundHandler
+ * @class ProcessGameHandler
  *
  * @package Micro\Game\Proxx\Application\CommandHandler
  */
-class FindBlackHolesAroundHandler implements CommandHandlerInterface
+class ProcessGameHandler implements CommandHandlerInterface
 {
     /**
      * EntityStoreRepository object.
@@ -31,14 +32,16 @@ class FindBlackHolesAroundHandler implements CommandHandlerInterface
     }
 
     /**
-     * Handle FindBlackHolesAroundCommand command.
+     * Handle ProcessGameCommand command.
 	 *
-	 * @var CommandInterface|CalculateBlackHolesAroundCommand.
+	 * @var CommandInterface|ProcessGameCommand.
      */
-    public function handle(CommandInterface $findBlackHolesAroundCommand): void
+    public function handle(CommandInterface $processGameCommand): BoardEntityInterface
     {
-		$boardEntity = $this->entityStoreRepository->get($findBlackHolesAroundCommand->getUuid());
-		$boardEntity->findBlackHolesAround($findBlackHolesAroundCommand->getProcessUuid());
+		$boardEntity = $this->entityStoreRepository->get($processGameCommand->getUuid());
+        $boardEntity->processGame($processGameCommand->getProcessUuid(), $processGameCommand->getPositionX(), $processGameCommand->getPositionY());
 		$this->entityStoreRepository->store($boardEntity);
+
+        return $boardEntity;
     }
 }

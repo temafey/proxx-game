@@ -20,21 +20,21 @@ class EntityStoreRepository extends SnapshottingEventSourcingRepository implemen
 {
 
    /**
-     * Retrieve ProxxEntity with applied events.
+     * Retrieve BoardEntity with applied events.
      */
     public function get(UuidInterface $uuid): BoardEntityInterface
     {
         $entity = $this->load($uuid->toString());
         
         if (!$entity instanceof BoardEntityInterface) {
-            throw new InvalidArgumentException('Return object should implement ProxxEntity.');
+            throw new InvalidArgumentException('Return object should implement BoardEntity.');
         }
 
         return $entity;
     }
 
     /**
-     * Save ProxxEntity last uncommitted events.
+     * Save BoardEntity last uncommitted events.
      *
      * @throws SnapshottingEventSourcingRepositoryException
      */

@@ -8,11 +8,12 @@ use Assert\Assertion;
 use Assert\AssertionFailedException;
 use MicroModule\Common\Domain\Event\AbstractEvent;
 use MicroModule\Common\Domain\ValueObject\ProcessUuid;
+use MicroModule\Common\Domain\ValueObject\Uuid;
 
 /**
- * @class OpenedEvent
+ * @class GameSuccessfulFinishedEvent
  *
  * @package Micro\Game\Proxx\Domain\Event
  */
-class OpenedEvent extends AbstractEvent
+class GameSuccessfulFinishedEvent extends AbstractEvent
 {}

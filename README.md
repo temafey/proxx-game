@@ -10,9 +10,8 @@ Proxx game microservice
 ## Stack
 
 - PHP 8.1
-
-## Requests
-
+- PostgreSQL 14
+- Symfony 6
 
 
 ## Project Setup
@@ -21,18 +20,13 @@ Up new environment:
 
 `make install`
 
+Start new game:
+
+`make game-start`
+
 See all make commands
 
 `make help`
-
-Full test circle
-
-`make test`
-
-Execute tests:
-
-`tests-unit` 
-`tests-integration`
 
 Static code analysis:
 
@@ -77,35 +71,19 @@ Watch containers logs
 ### Implementation
 
 ```
-├── src (Core bounded context)
+├── Proxx (Core bounded context)
 │   ├── Application
 │   │   ├── CommandHandler
-│   │   ├── QueryHandler
-│   │   ├── Dto
-│   │   ├── Projector
 │   │   ├── Saga
-│   │   └── Service
 │   ├── Domain
 │   │   ├── Entity
 │   │   ├── Command
-│   │   ├── Query
 │   │   ├── Event
-│   │   ├── Exception
 │   │   ├── Factory
-│   │   ├── Service
 │   │   └── ValueObject
 │   ├── Infrastructure
 │   │   └── Repository
-│   │   └── Service
 │   └── Presentation
 │       ├── Cli
-│       └── Rpc
 └── tests
-    ├── Integration
-    │   ├── Application
-    │   └── Presentation
-    └── Unit
-        ├── Application
-        ├── Domain
-        └── Infrastructure
 ```

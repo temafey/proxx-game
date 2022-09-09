@@ -13,7 +13,7 @@ use MicroModule\Common\Domain\ValueObject\Uuid;
  *
  * @package Micro\Game\Proxx\Domain\Command
  */
-class SetBlackHolesCommand extends AbstractCommand
+class PlaceBlackHolesCommand extends AbstractCommand
 {
     /**
      * Constructor

@@ -15,15 +15,16 @@ $structure = [
         DataTypeInterface::STRUCTURE_TYPE_ENTITY => [
             "board" => [
                 "create-board",
-                "set-cells",
-                "set-black-holes",
-                "find-black-holes-around",
+                "install-cells",
+                "place-black-holes",
+                "calculate-black-holes-around",
                 "open-cell",
                 "mark-black-hole",
+                "process-game",
             ],
             "cell" => [
                 "create-cell",
-                "set-black-hole",
+                "place-black-hole",
                 "open",
                 "set-black-holes-around",
                 "mark-black-hole",
@@ -120,53 +121,55 @@ $structure = [
                 DataTypeInterface::BUILDER_STRUCTURE_TYPE_ARGS => [
                     "process_uuid",
                     "uuid",
-                    "board",
+                    "width",
+                    "number-of-black-holes"
                 ],
                 DataTypeInterface::STRUCTURE_TYPE_ENTITY => "board",
                 DataTypeInterface::STRUCTURE_TYPE_EVENT => [
                     "board-create" => [
                         "process_uuid",
                         "uuid",
-                        "board",
+                        "width",
+                        "number-of-black-holes"
                     ],
                 ],
             ],
-            "set-cells" => [
+            "install-cells" => [
                 DataTypeInterface::BUILDER_STRUCTURE_TYPE_ARGS => [
                     "process_uuid",
                     "uuid",
                 ],
                 DataTypeInterface::STRUCTURE_TYPE_ENTITY => "board",
                 DataTypeInterface::STRUCTURE_TYPE_EVENT => [
-                    "cells-set" => [
+                    "cells-install" => [
                         "process_uuid",
                         "uuid",
-                        "board",
+                        "cells",
                     ],
                 ],
             ],
-            "set-black-holes" => [
+            "place-black-holes" => [
                 DataTypeInterface::BUILDER_STRUCTURE_TYPE_ARGS => [
                     "process_uuid",
                     "uuid",
                 ],
                 DataTypeInterface::STRUCTURE_TYPE_ENTITY => "board",
                 DataTypeInterface::STRUCTURE_TYPE_EVENT => [
-                    "black-holes-set" => [
+                    "black-holes-place" => [
                         "process_uuid",
                         "uuid",
-                        "board",
+                        "cells",
                     ],
                 ],
             ],
-            "find-black-holes-around" => [
+            "calculate-black-holes-around" => [
                 DataTypeInterface::BUILDER_STRUCTURE_TYPE_ARGS => [
                     "process_uuid",
                     "uuid",
                 ],
                 DataTypeInterface::STRUCTURE_TYPE_ENTITY => "board",
                 DataTypeInterface::STRUCTURE_TYPE_EVENT => [
-                    "around-black-holes-found" => [
+                    "black-holes-around-calculate" => [
                         "process_uuid",
                         "uuid",
                         "board",
@@ -199,11 +202,32 @@ $structure = [
                 ],
                 DataTypeInterface::STRUCTURE_TYPE_ENTITY => "board",
                 DataTypeInterface::STRUCTURE_TYPE_EVENT => [
-                    "board-create" => [
+                    "black-hole-mark" => [
                         "process_uuid",
                         "uuid",
                         "position-x",
                         "position-y",
+                    ],
+                ],
+            ],
+            "process-game" => [
+                DataTypeInterface::BUILDER_STRUCTURE_TYPE_ARGS => [
+                    "process_uuid",
+                    "uuid",
+                ],
+                DataTypeInterface::STRUCTURE_TYPE_ENTITY => "board",
+                DataTypeInterface::STRUCTURE_TYPE_EVENT => [
+                    "game-process" => [
+                        "process_uuid",
+                        "uuid",
+                    ],
+                    "game-successful-finish" => [
+                        "process_uuid",
+                        "uuid",
+                    ],
+                    "game-unsuccessful-finish" => [
+                        "process_uuid",
+                        "uuid",
                     ],
                 ],
             ],
@@ -215,22 +239,14 @@ $structure = [
                 ],
                 DataTypeInterface::STRUCTURE_TYPE_ENTITY => "cell",
                 DataTypeInterface::STRUCTURE_TYPE_EVENT => [
-                    "cell-create" => [
-                        "process_uuid",
-                        "position-x",
-                        "position-y",
-                    ],
                 ],
             ],
-            "set-black-hole" => [
+            "place-black-hole" => [
                 DataTypeInterface::BUILDER_STRUCTURE_TYPE_ARGS => [
                     "process_uuid",
                 ],
                 DataTypeInterface::STRUCTURE_TYPE_ENTITY => "cell",
                 DataTypeInterface::STRUCTURE_TYPE_EVENT => [
-                    "black-hole-set" => [
-                        "process_uuid",
-                    ],
                 ],
             ],
             "open" => [
@@ -239,9 +255,6 @@ $structure = [
                 ],
                 DataTypeInterface::STRUCTURE_TYPE_ENTITY => "cell",
                 DataTypeInterface::STRUCTURE_TYPE_EVENT => [
-                    "open" => [
-                        "process_uuid",
-                    ],
                 ],
             ],
             "set-black-holes-around" => [
@@ -251,10 +264,7 @@ $structure = [
                 ],
                 DataTypeInterface::STRUCTURE_TYPE_ENTITY => "cell",
                 DataTypeInterface::STRUCTURE_TYPE_EVENT => [
-                    "black-holes-around-set" => [
-                        "process_uuid",
-                        "number-of-black-holes-around",
-                    ],
+
                 ],
             ],
             "mark-black-hole" => [
@@ -263,9 +273,6 @@ $structure = [
                 ],
                 DataTypeInterface::STRUCTURE_TYPE_ENTITY => "cell",
                 DataTypeInterface::STRUCTURE_TYPE_EVENT => [
-                    "black-hole-mark" => [
-                        "process_uuid",
-                    ],
                 ],
             ],
         ],
@@ -278,38 +285,33 @@ $structure = [
                 ],
                 DataTypeInterface::STRUCTURE_TYPE_ENTITY => "board",
             ],
-            "set-cells" => [
+            "install-cells" => [
                 DataTypeInterface::BUILDER_STRUCTURE_TYPE_ARGS => [
                     DataTypeInterface::STRUCTURE_TYPE_REPOSITORY => 'entity-store',
-                    DataTypeInterface::STRUCTURE_TYPE_FACTORY => "entity",
                 ],
                 DataTypeInterface::STRUCTURE_TYPE_ENTITY => "board",
             ],
-            "set-black-holes" => [
+            "place-black-holes" => [
                 DataTypeInterface::BUILDER_STRUCTURE_TYPE_ARGS => [
                     DataTypeInterface::STRUCTURE_TYPE_REPOSITORY => 'entity-store',
-                    DataTypeInterface::STRUCTURE_TYPE_FACTORY => "entity",
                 ],
                 DataTypeInterface::STRUCTURE_TYPE_ENTITY => "board",
             ],
-            "find-black-holes-around" => [
+            "calculate-black-holes-around" => [
                 DataTypeInterface::BUILDER_STRUCTURE_TYPE_ARGS => [
                     DataTypeInterface::STRUCTURE_TYPE_REPOSITORY => 'entity-store',
-                    DataTypeInterface::STRUCTURE_TYPE_FACTORY => "entity",
                 ],
                 DataTypeInterface::STRUCTURE_TYPE_ENTITY => "board",
             ],
             "open-cell" => [
                 DataTypeInterface::BUILDER_STRUCTURE_TYPE_ARGS => [
                     DataTypeInterface::STRUCTURE_TYPE_REPOSITORY => 'entity-store',
-                    DataTypeInterface::STRUCTURE_TYPE_FACTORY => "entity",
                 ],
                 DataTypeInterface::STRUCTURE_TYPE_ENTITY => "board",
             ],
             "mark-black-hole-on-cell" => [
                 DataTypeInterface::BUILDER_STRUCTURE_TYPE_ARGS => [
                     DataTypeInterface::STRUCTURE_TYPE_REPOSITORY => 'entity-store',
-                    DataTypeInterface::STRUCTURE_TYPE_FACTORY => "entity",
                 ],
                 DataTypeInterface::STRUCTURE_TYPE_ENTITY => "board",
             ],
@@ -322,10 +324,14 @@ $structure = [
                     "Micro\Game\Domain\Factory\CommandFactoryInterface",
                 ],
                 DataTypeInterface::STRUCTURE_TYPE_EVENT => [
-                    "board-create" => true,
-                    "cells-set" => true,
-                    "black-holes-set" => true,
-                    "around-black-holes-found" => true,
+                    "board-create" => "install-cells",
+                    "cells-install" => "place-black-holes",
+                    "black-holes-place" => "calculate-black-holes-around",
+                    "black-holes-around-calculate" => "process-game",
+                    "cell-open" => "process-game",
+                    "black-hole-mark" => "process-game",
+                    "game-successful-finish" => true,
+                    "game-unsuccessful-finish" => true,
                 ],
             ],
         ],

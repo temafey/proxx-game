@@ -5,6 +5,9 @@ services:
   # Inner
   game.proxx.application.saga:
     class: Micro\Game\Proxx\Application\Saga\ProxxSaga
+    arguments:
+      - '@tactician.commandbus.command.game.proxx'
+      - '@game.proxx.domain.factory.command'
     tags:
       - { name: broadway.saga, type: api.proxx }
 

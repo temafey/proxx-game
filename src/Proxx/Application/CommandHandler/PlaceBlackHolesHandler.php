@@ -6,15 +6,15 @@ namespace Micro\Game\Proxx\Application\CommandHandler;
 
 use MicroModule\Base\Domain\Command\CommandInterface;
 use MicroModule\Common\Application\CommandHandler\CommandHandlerInterface;
-use Micro\Game\Proxx\Domain\Command\CalculateBlackHolesAroundCommand;
+use Micro\Game\Proxx\Domain\Command\PlaceBlackHolesCommand;
 use Micro\Game\Proxx\Domain\Repository\EntityStoreRepositoryInterface;
 
 /**
- * @class FindBlackHolesAroundHandler
+ * @class PlaceBlackHolesHandler
  *
  * @package Micro\Game\Proxx\Application\CommandHandler
  */
-class FindBlackHolesAroundHandler implements CommandHandlerInterface
+class PlaceBlackHolesHandler implements CommandHandlerInterface
 {
     /**
      * EntityStoreRepository object.
@@ -27,18 +27,18 @@ class FindBlackHolesAroundHandler implements CommandHandlerInterface
     public function __construct(EntityStoreRepositoryInterface $entityStoreRepository)
     {
 		$this->entityStoreRepository = $entityStoreRepository;
-        
     }
 
     /**
-     * Handle FindBlackHolesAroundCommand command.
+     * Handle PlaceBlackHolesCommand command.
 	 *
-	 * @var CommandInterface|CalculateBlackHolesAroundCommand.
+	 * @var CommandInterface|PlaceBlackHolesCommand.
      */
-    public function handle(CommandInterface $findBlackHolesAroundCommand): void
+    public function handle(CommandInterface $placeBlackHolesCommand): void
     {
-		$boardEntity = $this->entityStoreRepository->get($findBlackHolesAroundCommand->getUuid());
-		$boardEntity->findBlackHolesAround($findBlackHolesAroundCommand->getProcessUuid());
+		$boardEntity = $this->entityStoreRepository->get($placeBlackHolesCommand->getUuid());
+		$boardEntity->setBlackHoles($placeBlackHolesCommand->getProcessUuid());
 		$this->entityStoreRepository->store($boardEntity);
+
     }
 }

@@ -26,33 +26,36 @@ class Board implements Serializable, ValueObjectInterface
      * Fields, that should be compared.
      */
     public const COMPARED_FIELDS = [
-		'width',
-		'number-of-black-holes',
-		'number-of-opened-cells',
-		'number-of-marked-black-holes',
-		'created_at',
-		'updated_at',
+		"width",
+		"number-of-black-holes",
+		"number-of-opened-cells",
+		"number-of-marked-black-holes",
 	];
 
     /**
-     * Return Width value object.
+     * Width value object.
      */
-    protected ?Width $width = null;
+    protected Width $width;
 
     /**
-     * Return NumberOfBlackHoles value object.
+     * NumberOfBlackHoles value object.
      */
-    protected ?NumberOfBlackHoles $numberOfBlackHoles = null;
+    protected NumberOfBlackHoles $numberOfBlackHoles;
 
     /**
-     * Return NumberOfOpenedCells value object.
+     * NumberOfOpenedCells value object.
      */
     protected ?NumberOfOpenedCells $numberOfOpenedCells = null;
 
     /**
-     * Return NumberOfMarkedBlackHoles value object.
+     * NumberOfMarkedBlackHoles value object.
      */
     protected ?NumberOfMarkedBlackHoles $numberOfMarkedBlackHoles = null;
+
+    /**
+     * GameStatus value object.
+     */
+    protected ?GameStatus $gameStatus = null;
 
     /**
      * Return CreatedAt value object.
@@ -80,12 +83,12 @@ class Board implements Serializable, ValueObjectInterface
         }
 
         if (is_string($data)) {
-            $data = unserialize($data, ['allowed_classes' => false]);
+            $data = unserialize($data, ["allowed_classes" => false]);
 
             return static::fromArray($data);
         }
 
-        throw new ValueObjectInvalidNativeValueException('Invalid native value');
+        throw new ValueObjectInvalidNativeValueException("Invalid native value");
     }
 
     /**
@@ -100,7 +103,7 @@ class Board implements Serializable, ValueObjectInterface
         }
 
         foreach (static::COMPARED_FIELDS as $field) {
-            $getMethodName = 'get' . ucfirst($field);
+            $getMethodName = "get" . ucfirst($field);
             $field = $this->{$getMethodName}();
             $property = $valueObject->{$getMethodName}();
 
@@ -116,7 +119,7 @@ class Board implements Serializable, ValueObjectInterface
                 !$field instanceof ValueObjectInterface ||
                 !$property instanceof ValueObjectInterface
             ) {
-                throw new ValueObjectInvalidException('Some of value not instance of \'ValueObjectInterface\'');
+                throw new ValueObjectInvalidException("Some of value not instance of \"ValueObjectInterface\"");
             }
 
             if (!$field->sameValueAs($property)) {
@@ -179,28 +182,33 @@ class Board implements Serializable, ValueObjectInterface
     public static function fromArray(array $data): static
     {
 		$valueObject = new static();
-		if (isset($data['width'])) {
-			$valueObject->width = Width::fromNative($data['width']);
+
+		if (isset($data["width"])) {
+			$valueObject->width = Width::fromNative($data["width"]);
 		}
 
-		if (isset($data['number-of-black-holes'])) {
-			$valueObject->numberOfBlackHoles = NumberOfBlackHoles::fromNative($data['number-of-black-holes']);
+		if (isset($data["number-of-black-holes"])) {
+			$valueObject->numberOfBlackHoles = NumberOfBlackHoles::fromNative($data["number-of-black-holes"]);
 		}
 
-		if (isset($data['number-of-opened-cells'])) {
-			$valueObject->numberOfOpenedCells = NumberOfOpenedCells::fromNative($data['number-of-opened-cells']);
+		if (isset($data["number-of-opened-cells"])) {
+			$valueObject->numberOfOpenedCells = NumberOfOpenedCells::fromNative($data["number-of-opened-cells"]);
 		}
 
-		if (isset($data['number-of-marked-black-holes'])) {
-			$valueObject->numberOfMarkedBlackHoles = NumberOfMarkedBlackHoles::fromNative($data['number-of-marked-black-holes']);
+		if (isset($data["number-of-marked-black-holes"])) {
+			$valueObject->numberOfMarkedBlackHoles = NumberOfMarkedBlackHoles::fromNative($data["number-of-marked-black-holes"]);
 		}
 
-		if (isset($data['created_at'])) {
-			$valueObject->createdAt = CreatedAt::fromNative($data['created_at']);
+        if (isset($data["game-status"])) {
+            $valueObject->gameStatus = GameStatus::fromNative($data["game-status"]);
+        }
+
+		if (isset($data["created_at"])) {
+			$valueObject->createdAt = CreatedAt::fromNative($data["created_at"]);
 		}
 
-		if (isset($data['updated_at'])) {
-			$valueObject->updatedAt = UpdatedAt::fromNative($data['updated_at']);
+		if (isset($data["updated_at"])) {
+			$valueObject->updatedAt = UpdatedAt::fromNative($data["updated_at"]);
 		}
 
         return $valueObject;
@@ -213,27 +221,31 @@ class Board implements Serializable, ValueObjectInterface
     {
 		$data = [];
 		if (null !== $this->width) {
-			$data['width'] = $this->width->toNative();
+			$data["width"] = $this->width->toNative();
 		}
 
 		if (null !== $this->numberOfBlackHoles) {
-			$data['number-of-black-holes'] = $this->numberOfBlackHoles->toNative();
+			$data["number-of-black-holes"] = $this->numberOfBlackHoles->toNative();
 		}
 
 		if (null !== $this->numberOfOpenedCells) {
-			$data['number-of-opened-cells'] = $this->numberOfOpenedCells->toNative();
+			$data["number-of-opened-cells"] = $this->numberOfOpenedCells->toNative();
 		}
 
 		if (null !== $this->numberOfMarkedBlackHoles) {
-			$data['number-of-marked-black-holes'] = $this->numberOfMarkedBlackHoles->toNative();
+			$data["number-of-marked-black-holes"] = $this->numberOfMarkedBlackHoles->toNative();
 		}
 
+        if (null !== $this->gameStatus) {
+            $data["game-status"] = $this->gameStatus->toNative();
+        }
+
 		if (null !== $this->createdAt) {
-			$data['created_at'] = $this->createdAt->toNative();
+			$data["created_at"] = $this->createdAt->toNative();
 		}
 
 		if (null !== $this->updatedAt) {
-			$data['updated_at'] = $this->updatedAt->toNative();
+			$data["updated_at"] = $this->updatedAt->toNative();
 		}
 
         return $data;
@@ -269,6 +281,14 @@ class Board implements Serializable, ValueObjectInterface
     public function getNumberOfMarkedBlackHoles(): ?NumberOfMarkedBlackHoles
     {
         return $this->numberOfMarkedBlackHoles;
+    }
+
+    /**
+     * Return game status.
+     */
+    public function getGameStatus(): ?GameStatus
+    {
+        return $this->gameStatus;
     }
 
     /**

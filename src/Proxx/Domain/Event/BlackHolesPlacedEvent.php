@@ -5,9 +5,11 @@ declare(strict_types=1);
 namespace Micro\Game\Proxx\Domain\Event;
 
 /**
- * @class BlackHoleMarkedEvent
+ * @class BlackHolesPlacedEvent
  *
  * @package Micro\Game\Proxx\Domain\Event
  */
-class BlackHoleMarkedEvent extends CellOpenedEvent
-{}
+class BlackHolesPlacedEvent extends CellsInstalledEvent
+{
+
+}

@@ -40,12 +40,12 @@ interface CommonValueObjectFactoryInterface
     /**
      * Create CreatedAt value object
      */
-    public function makeCreatedAt(string $createdAt): CreatedAt;
+    public function makeCreatedAt(?string $createdAt = null): CreatedAt;
 
     /**
      * Create UpdatedAt value object
      */
-    public function makeUpdatedAt(string $updatedAt): UpdatedAt;
+    public function makeUpdatedAt(?string $updatedAt = null): UpdatedAt;
 
     /**
      * Create NullValue value object

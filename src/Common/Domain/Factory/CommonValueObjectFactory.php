@@ -60,8 +60,11 @@ class CommonValueObjectFactory implements CommonValueObjectFactoryInterface
      *
      * @throws InvalidDateException
      */
-    public function makeCreatedAt(string $createdAt): CreatedAt
+    public function makeCreatedAt(?string $createdAt = null): CreatedAt
     {
+        if (null === $createdAt) {
+            $createdAt = date("Y-m-d H:i:s");
+        }
         return CreatedAt::fromNative($createdAt);
     }
 
@@ -70,8 +73,11 @@ class CommonValueObjectFactory implements CommonValueObjectFactoryInterface
      *
      * @throws InvalidDateException
      */
-    public function makeUpdatedAt(string $updatedAt): UpdatedAt
+    public function makeUpdatedAt(?string $updatedAt = null): UpdatedAt
     {
+        if (null === $updatedAt) {
+            $updatedAt = date("Y-m-d H:i:s");
+        }
         return UpdatedAt::fromNative($updatedAt);
     }
 

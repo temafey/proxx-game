@@ -4,21 +4,22 @@ declare(strict_types=1);
 
 namespace Micro\Game\Proxx\Domain\Factory;
 
+use Micro\Game\Proxx\Domain\Event\AroundCellsOpenedEvent;
+use Micro\Game\Proxx\Domain\Event\BlackHoleUnmarkedEvent;
 use MicroModule\Common\Domain\ValueObject\Payload;
 use MicroModule\Common\Domain\ValueObject\ProcessUuid;
 use MicroModule\Common\Domain\ValueObject\Uuid;
-use Micro\Game\Proxx\Domain\Event\AroundBlackHolesFoundedEvent;
 use Micro\Game\Proxx\Domain\Event\BlackHoleMarkedEvent;
-use Micro\Game\Proxx\Domain\Event\BlackHoleSetedEvent;
-use Micro\Game\Proxx\Domain\Event\BlackHolesAroundSetedEvent;
-use Micro\Game\Proxx\Domain\Event\BlackHolesSetedEvent;
+use Micro\Game\Proxx\Domain\Event\BlackHolesAroundCalculatedEvent;
+use Micro\Game\Proxx\Domain\Event\BlackHolesPlacedEvent;
 use Micro\Game\Proxx\Domain\Event\BoardCreatedEvent;
-use Micro\Game\Proxx\Domain\Event\CellCreatedEvent;
 use Micro\Game\Proxx\Domain\Event\CellOpenedEvent;
-use Micro\Game\Proxx\Domain\Event\CellsSetedEvent;
-use Micro\Game\Proxx\Domain\Event\OpenedEvent;
+use Micro\Game\Proxx\Domain\Event\CellsInstalledEvent;
+use Micro\Game\Proxx\Domain\Event\GameProcessedEvent;
+use Micro\Game\Proxx\Domain\Event\GameSuccessfulFinishedEvent;
+use Micro\Game\Proxx\Domain\Event\GameUnsuccessfulFinishedEvent;
 use Micro\Game\Proxx\Domain\ValueObject\Board;
-use Micro\Game\Proxx\Domain\ValueObject\NumberOfBlackHolesAround;
+use Micro\Game\Proxx\Domain\ValueObject\Cells;
 use Micro\Game\Proxx\Domain\ValueObject\PositionX;
 use Micro\Game\Proxx\Domain\ValueObject\PositionY;
 use Micro\Game\Proxx\Domain\ValueObject\Proxx;
@@ -33,40 +34,40 @@ class EventFactory implements EventFactoryInterface
     /**
      * Create BoardCreatedEvent Event.
      */
-    public function makeBoardCreatedEvent(ProcessUuid $processUuid, Uuid $uuid, PositionX $positionX, PositionY $positionY, ?Payload $payload = null): BoardCreatedEvent
+    public function makeBoardCreatedEvent(ProcessUuid $processUuid, Uuid $uuid, Board $board, ?Payload $payload = null): BoardCreatedEvent
     {
         return new BoardCreatedEvent(
-			$processUuid, $uuid, $positionX, $positionY, $payload
-		);
-    }
-
-    /**
-     * Create CellsSetedEvent Event.
-     */
-    public function makeCellsSetedEvent(ProcessUuid $processUuid, Uuid $uuid, Board $board, ?Payload $payload = null): CellsSetedEvent
-    {
-        return new CellsSetedEvent(
 			$processUuid, $uuid, $board, $payload
 		);
     }
 
     /**
-     * Create BlackHolesSetedEvent Event.
+     * Create CellsInstalledEvent Event.
      */
-    public function makeBlackHolesSetedEvent(ProcessUuid $processUuid, Uuid $uuid, Board $board, ?Payload $payload = null): BlackHolesSetedEvent
+    public function makeCellsInstalledEvent(ProcessUuid $processUuid, Uuid $uuid, Cells $cells, ?Payload $payload = null): CellsInstalledEvent
     {
-        return new BlackHolesSetedEvent(
-			$processUuid, $uuid, $board, $payload
+        return new CellsInstalledEvent(
+			$processUuid, $uuid, $cells, $payload
 		);
     }
 
     /**
-     * Create AroundBlackHolesFoundedEvent Event.
+     * Create BlackHolesPlacedEvent Event.
      */
-    public function makeAroundBlackHolesFoundedEvent(ProcessUuid $processUuid, Uuid $uuid, Board $board, ?Payload $payload = null): AroundBlackHolesFoundedEvent
+    public function makeBlackHolesPlacedEvent(ProcessUuid $processUuid, Uuid $uuid, Cells $cells, ?Payload $payload = null): BlackHolesPlacedEvent
     {
-        return new AroundBlackHolesFoundedEvent(
-			$processUuid, $uuid, $board, $payload
+        return new BlackHolesPlacedEvent(
+			$processUuid, $uuid, $cells, $payload
+		);
+    }
+
+    /**
+     * Create BlackHolesAroundCalculatedEvent Event.
+     */
+    public function makeBlackHolesAroundCalculatedEvent(ProcessUuid $processUuid, Uuid $uuid, Cells $cells, ?Payload $payload = null): BlackHolesAroundCalculatedEvent
+    {
+        return new BlackHolesAroundCalculatedEvent(
+			$processUuid, $uuid, $cells, $payload
 		);
     }
 
@@ -81,52 +82,62 @@ class EventFactory implements EventFactoryInterface
     }
 
     /**
-     * Create CellCreatedEvent Event.
-     */
-    public function makeCellCreatedEvent(ProcessUuid $processUuid, PositionX $positionX, PositionY $positionY, ?Payload $payload = null): CellCreatedEvent
-    {
-        return new CellCreatedEvent(
-			$processUuid, $positionX, $positionY, $payload
-		);
-    }
-
-    /**
-     * Create BlackHoleSetedEvent Event.
-     */
-    public function makeBlackHoleSetedEvent(ProcessUuid $processUuid, ?Payload $payload = null): BlackHoleSetedEvent
-    {
-        return new BlackHoleSetedEvent(
-			$processUuid, $payload
-		);
-    }
-
-    /**
-     * Create OpenedEvent Event.
-     */
-    public function makeOpenedEvent(ProcessUuid $processUuid, ?Payload $payload = null): OpenedEvent
-    {
-        return new OpenedEvent(
-			$processUuid, $payload
-		);
-    }
-
-    /**
-     * Create BlackHolesAroundSetedEvent Event.
-     */
-    public function makeBlackHolesAroundSetedEvent(ProcessUuid $processUuid, NumberOfBlackHolesAround $numberOfBlackHolesAround, ?Payload $payload = null): BlackHolesAroundSetedEvent
-    {
-        return new BlackHolesAroundSetedEvent(
-			$processUuid, $numberOfBlackHolesAround, $payload
-		);
-    }
-
-    /**
      * Create BlackHoleMarkedEvent Event.
      */
-    public function makeBlackHoleMarkedEvent(ProcessUuid $processUuid, ?Payload $payload = null): BlackHoleMarkedEvent
+    public function makeBlackHoleMarkedEvent(ProcessUuid $processUuid, Uuid $uuid, PositionX $positionX, PositionY $positionY, ?Payload $payload = null): BlackHoleMarkedEvent
     {
         return new BlackHoleMarkedEvent(
-			$processUuid, $payload
+			$processUuid, $uuid, $positionX, $positionY, $payload
 		);
+    }
+
+    /**
+     * Create BlackHoleUnmarkedEvent Event.
+     */
+    public function makeBlackHoleUnmarkedEvent(ProcessUuid $processUuid, Uuid $uuid, PositionX $positionX, PositionY $positionY, ?Payload $payload = null): BlackHoleMarkedEvent
+    {
+        return new BlackHoleUnmarkedEvent(
+            $processUuid, $uuid, $positionX, $positionY, $payload
+        );
+    }
+
+    /**
+     * Create GameProcessedEvent Event.
+     */
+    public function makeGameProcessedEvent(ProcessUuid $processUuid, Uuid $uuid, PositionX $positionX, PositionY $positionY, ?Payload $payload = null): GameProcessedEvent
+    {
+        return new GameProcessedEvent(
+            $processUuid, $uuid, $positionX, $positionY, $payload
+        );
+    }
+
+    /**
+     * Create GameSuccessfulFinishedEvent Event.
+     */
+    public function makeGameSuccessfulFinishedEvent(ProcessUuid $processUuid, Uuid $uuid, ?Payload $payload = null): GameSuccessfulFinishedEvent
+    {
+        return new GameSuccessfulFinishedEvent(
+			$processUuid, $uuid, $payload
+		);
+    }
+
+    /**
+     * Create GameUnsuccessfulFinishedEvent Event.
+     */
+    public function makeGameUnsuccessfulFinishedEvent(ProcessUuid $processUuid, Uuid $uuid, ?Payload $payload = null): GameUnsuccessfulFinishedEvent
+    {
+        return new GameUnsuccessfulFinishedEvent(
+			$processUuid, $uuid, $payload
+		);
+    }
+
+    /**
+     * Create AroundCellsOpenedEvent Event.
+     */
+    public function makeAroundCellsOpenedEvent(ProcessUuid $processUuid, Uuid $uuid, Cells $cells, ?Payload $payload = null): AroundCellsOpenedEvent
+    {
+        return new AroundCellsOpenedEvent(
+            $processUuid, $uuid, $cells, $payload
+        );
     }
 }

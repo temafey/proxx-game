@@ -79,6 +79,10 @@ migration-migrate: ## run database migration
 micro-generate: ## run microservice generator
 	docker-compose run --rm $(PHP_CONTAINER_NAME) sh -lc 'php ./generator.php'
 
+.PHONY: game-start
+game-start: ## start new game
+	docker-compose run --rm $(PHP_CONTAINER_NAME) sh -lc './bin/console game:start'
+
 .PHONY: php-shell
 php-shell: ## PHP shell
 	docker-compose run --rm $(PHP_CONTAINER_NAME) sh -l

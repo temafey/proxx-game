@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace Micro\Game\Proxx\Domain\Entity;
 
+use Micro\Game\Proxx\Domain\ValueObject\GameStatus;
+use Micro\Game\Proxx\Domain\ValueObject\PositionX;
+use Micro\Game\Proxx\Domain\ValueObject\PositionY;
 use MicroModule\Common\Domain\ValueObject\CreatedAt;
 use MicroModule\Common\Domain\ValueObject\ProcessUuid;
 use MicroModule\Common\Domain\ValueObject\UpdatedAt;
@@ -42,6 +45,11 @@ interface BoardEntityInterface
     public function getNumberOfMarkedBlackHoles(): ?NumberOfMarkedBlackHoles;
 
     /**
+     * Return game status.
+     */
+    public function getGameStatus(): GameStatus;
+
+    /**
      * Return created_at value object.
      */
     public function getCreatedAt(): ?CreatedAt;
@@ -59,7 +67,7 @@ interface BoardEntityInterface
     /**
      * Execute set-cells command.
      */
-    public function setCells(ProcessUuid $processUuid);
+    public function installCells(ProcessUuid $processUuid);
 
     /**
      * Execute set-black-holes command.
@@ -67,9 +75,9 @@ interface BoardEntityInterface
     public function setBlackHoles(ProcessUuid $processUuid);
 
     /**
-     * Execute find-black-holes-around command.
+     * Execute calculate-black-holes-around command.
      */
-    public function findBlackHolesAround(ProcessUuid $processUuid);
+    public function calculateBlackHolesAround(ProcessUuid $processUuid);
 
     /**
      * Execute open-cell command.
@@ -79,5 +87,15 @@ interface BoardEntityInterface
     /**
      * Execute mark-black-hole command.
      */
-    public function markBlackHole(ProcessUuid $processUuid);
+    public function markBlackHole(ProcessUuid $processUuid, PositionX $positionX, PositionY $positionY);
+
+    /**
+     * Execute unmark-black-hole command.
+     */
+    public function unmarkBlackHole(ProcessUuid $processUuid, PositionX $positionX, PositionY $positionY);
+
+    /**
+     * Execute process-game command.
+     */
+    public function processGame(ProcessUuid $processUuid, PositionX $positionX, PositionY $positionY);
 }

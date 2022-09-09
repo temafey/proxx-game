@@ -11,6 +11,7 @@ services:
     class: Micro\Game\Proxx\Application\CommandHandler\CreateBoardHandler
     arguments:
       - '@game.proxx.infrastructure.repository.entity'
+      - '@game.proxx.domain.factory.value-object'
       - '@game.proxx.domain.factory.entity'
     tags:
       - {
@@ -19,36 +20,36 @@ services:
         bus: command.game.proxx
       }
 
-  game.proxx.application.command_handler.board.find-black-holes-around:
-    class: Micro\Game\Proxx\Application\CommandHandler\FindBlackHolesAroundHandler
+  game.proxx.application.command_handler.board.calculate-black-holes-around:
+    class: Micro\Game\Proxx\Application\CommandHandler\CalculateBlackHolesAroundHandler
     arguments:
       - '@game.proxx.infrastructure.repository.entity'
     tags:
       - {
         name: tactician.handler,
-        command: Micro\Game\Proxx\Domain\Command\FindBlackHolesAroundCommand,
+        command: Micro\Game\Proxx\Domain\Command\CalculateBlackHolesAroundCommand,
         bus: command.game.proxx
       }
 
-  game.proxx.application.command_handler.board.set-black-holes-around-handler:
-    class: Micro\Game\Proxx\Application\CommandHandler\SetBlackHolesAroundHandler
+  game.proxx.application.command_handler.board.place-black-holes-handler:
+    class: Micro\Game\Proxx\Application\CommandHandler\PlaceBlackHolesHandler
     arguments:
       - '@game.proxx.infrastructure.repository.entity'
     tags:
       - {
         name: tactician.handler,
-        command: Micro\Game\Proxx\Domain\Command\SetBlackHolesAroundCommand,
+        command: Micro\Game\Proxx\Domain\Command\PlaceBlackHolesCommand,
         bus: command.game.proxx
       }
 
-  game.proxx.application.command_handler.board.set-cells:
-    class: Micro\Game\Proxx\Application\CommandHandler\SetCellsHandler
+  game.proxx.application.command_handler.board.install-cells:
+    class: Micro\Game\Proxx\Application\CommandHandler\InstallCellsHandler
     arguments:
       - '@game.proxx.infrastructure.repository.entity'
     tags:
       - {
         name: tactician.handler,
-        command: Micro\Game\Proxx\Domain\Command\SetCellsCommand,
+        command: Micro\Game\Proxx\Domain\Command\InstallCellsCommand,
         bus: command.game.proxx
       }
 
@@ -71,5 +72,27 @@ services:
       - {
         name: tactician.handler,
         command: Micro\Game\Proxx\Domain\Command\MarkBlackHoleOnCellCommand,
+        bus: command.game.proxx
+      }
+
+  game.proxx.application.command_handler.board.unmark-black-hole-on-cell:
+    class: Micro\Game\Proxx\Application\CommandHandler\UnmarkBlackHoleOnCellHandler
+    arguments:
+      - '@game.proxx.infrastructure.repository.entity'
+    tags:
+      - {
+        name: tactician.handler,
+        command: Micro\Game\Proxx\Domain\Command\UnmarkBlackHoleOnCellCommand,
+        bus: command.game.proxx
+      }
+
+  game.proxx.application.command_handler.board.process-game:
+    class: Micro\Game\Proxx\Application\CommandHandler\ProcessGameHandler
+    arguments:
+      - '@game.proxx.infrastructure.repository.entity'
+    tags:
+      - {
+        name: tactician.handler,
+        command: Micro\Game\Proxx\Domain\Command\ProcessGameCommand,
         bus: command.game.proxx
       }

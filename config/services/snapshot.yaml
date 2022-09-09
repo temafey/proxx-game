@@ -21,7 +21,7 @@ services:
     class: MicroModule\Snapshotting\Snapshot\SnapshotRepository
     arguments:
       - '@micro_module.snapshotting.snapshot.storage'
-      - 'Blu\Micro\Reward\Visa\Transaction\Domain\Entity\TransactionEntity'
+      - 'Micro\Game\Proxx\Domain\Entity\BoardEntity'
       - '@micro_module.snapshotting.event_sourcing.aggregate.factory'
 
   micro_module.snapshotting.event_sourcing.aggregate.factory:

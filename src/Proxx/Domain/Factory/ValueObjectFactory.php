@@ -19,17 +19,17 @@ use Micro\Game\Proxx\Domain\ValueObject\NumberOfOpenedCells;
 use Micro\Game\Proxx\Domain\ValueObject\OpenedCells;
 use Micro\Game\Proxx\Domain\ValueObject\PositionX;
 use Micro\Game\Proxx\Domain\ValueObject\PositionY;
-use Micro\Game\Proxx\Domain\ValueObject\Proxx;
 use Micro\Game\Proxx\Domain\ValueObject\WasMarked;
 use Micro\Game\Proxx\Domain\ValueObject\WasOpened;
 use Micro\Game\Proxx\Domain\ValueObject\Width;
+use MicroModule\Common\Domain\Factory\CommonValueObjectFactoryInterface;
 
 /**
  * @class ValueObjectFactory
  *
  * @package Micro\Game\Proxx\Domain\Factory
  */
-class ValueObjectFactory extends CommonValueObjectFactory implements ValueObjectFactoryInterface
+class ValueObjectFactory extends CommonValueObjectFactory implements ValueObjectFactoryInterface, CommonValueObjectFactoryInterface
 {
     /**
      * Create Width ValueObject.
@@ -122,9 +122,9 @@ class ValueObjectFactory extends CommonValueObjectFactory implements ValueObject
     /**
      * Create HasBlackHole ValueObject.
      */
-    public function makeHasBlackHole(int $hasBlackHole): HasBlackHole
+    public function makeHasBlackHole(): HasBlackHole
     {
-        return HasBlackHole::fromNative($hasBlackHole);
+        return HasBlackHole::fromNative();
     }
 
     /**
@@ -138,17 +138,17 @@ class ValueObjectFactory extends CommonValueObjectFactory implements ValueObject
     /**
      * Create WasOpened ValueObject.
      */
-    public function makeWasOpened(int $wasOpened): WasOpened
+    public function makeWasOpened(): WasOpened
     {
-        return WasOpened::fromNative($wasOpened);
+        return WasOpened::fromNative();
     }
 
     /**
      * Create WasMarked ValueObject.
      */
-    public function makeWasMarked(int $wasMarked): WasMarked
+    public function makeWasMarked(): WasMarked
     {
-        return WasMarked::fromNative($wasMarked);
+        return WasMarked::fromNative();
     }
 
     /**

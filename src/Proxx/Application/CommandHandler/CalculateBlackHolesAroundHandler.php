@@ -10,11 +10,11 @@ use Micro\Game\Proxx\Domain\Command\CalculateBlackHolesAroundCommand;
 use Micro\Game\Proxx\Domain\Repository\EntityStoreRepositoryInterface;
 
 /**
- * @class FindBlackHolesAroundHandler
+ * @class CalculateBlackHolesAroundHandler
  *
  * @package Micro\Game\Proxx\Application\CommandHandler
  */
-class FindBlackHolesAroundHandler implements CommandHandlerInterface
+class CalculateBlackHolesAroundHandler implements CommandHandlerInterface
 {
     /**
      * EntityStoreRepository object.
@@ -31,14 +31,14 @@ class FindBlackHolesAroundHandler implements CommandHandlerInterface
     }
 
     /**
-     * Handle FindBlackHolesAroundCommand command.
+     * Handle CalculateBlackHolesAroundCommand command.
 	 *
 	 * @var CommandInterface|CalculateBlackHolesAroundCommand.
      */
-    public function handle(CommandInterface $findBlackHolesAroundCommand): void
+    public function handle(CommandInterface $calculateBlackHolesAroundCommand): void
     {
-		$boardEntity = $this->entityStoreRepository->get($findBlackHolesAroundCommand->getUuid());
-		$boardEntity->findBlackHolesAround($findBlackHolesAroundCommand->getProcessUuid());
+		$boardEntity = $this->entityStoreRepository->get($calculateBlackHolesAroundCommand->getUuid());
+		$boardEntity->calculateBlackHolesAround($calculateBlackHolesAroundCommand->getProcessUuid());
 		$this->entityStoreRepository->store($boardEntity);
     }
 }

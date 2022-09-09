@@ -4,11 +4,6 @@ declare(strict_types=1);
 
 namespace Micro\Game\Proxx\Domain\Entity;
 
-use MicroModule\Common\Domain\ValueObject\CreatedAt;
-use MicroModule\Common\Domain\ValueObject\ProcessUuid;
-use MicroModule\Common\Domain\ValueObject\UpdatedAt;
-use MicroModule\Common\Domain\ValueObject\Uuid;
-use Micro\Game\Proxx\Domain\ValueObject\Cell;
 use Micro\Game\Proxx\Domain\ValueObject\HasBlackHole;
 use Micro\Game\Proxx\Domain\ValueObject\NumberOfBlackHolesAround;
 use Micro\Game\Proxx\Domain\ValueObject\PositionX;
@@ -39,9 +34,19 @@ interface CellEntityInterface
     public function getHasBlackHole(): ?HasBlackHole;
 
     /**
+     * Has black hole in the cell.
+     */
+    public function hasBlackHole(): bool;
+
+    /**
      * Return number-of-black-holes-around value object.
      */
     public function getNumberOfBlackHolesAround(): ?NumberOfBlackHolesAround;
+
+    /**
+     * Has black holes around.
+     */
+    public function hasBlackHolesAround(): bool;
 
     /**
      * Return was-opened value object.
@@ -49,42 +54,42 @@ interface CellEntityInterface
     public function getWasOpened(): ?WasOpened;
 
     /**
+     * Is cell was opened.
+     */
+    public function isWasOpened(): bool;
+
+    /**
      * Return was-marked value object.
      */
     public function getWasMarked(): ?WasMarked;
 
     /**
-     * Return created_at value object.
+     * Is black hole marked on cell.
      */
-    public function getCreatedAt(): ?CreatedAt;
-
-    /**
-     * Return updated_at value object.
-     */
-    public function getUpdatedAt(): ?UpdatedAt;
+    public function isBlackHoleMarked(): bool;
 
     /**
      * Execute create-cell command.
      */
-    public function createCell(ProcessUuid $processUuid, PositionX $positionX, PositionY $positionY);
+    public function createCell(PositionX $positionX, PositionY $positionY);
 
     /**
      * Execute set-black-hole command.
      */
-    public function setBlackHole(ProcessUuid $processUuid);
+    public function setBlackHole();
 
     /**
      * Execute open command.
      */
-    public function open(ProcessUuid $processUuid);
+    public function open();
 
     /**
      * Execute set-black-holes-around command.
      */
-    public function setBlackHolesAround(ProcessUuid $processUuid, NumberOfBlackHolesAround $numberOfBlackHolesAround);
+    public function setBlackHolesAround(NumberOfBlackHolesAround $numberOfBlackHolesAround);
 
     /**
      * Execute mark-black-hole command.
      */
-    public function markBlackHole(ProcessUuid $processUuid);
+    public function markBlackHole();
 }

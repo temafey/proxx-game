@@ -18,7 +18,6 @@ use Micro\Game\Proxx\Domain\ValueObject\NumberOfOpenedCells;
 use Micro\Game\Proxx\Domain\ValueObject\OpenedCells;
 use Micro\Game\Proxx\Domain\ValueObject\PositionX;
 use Micro\Game\Proxx\Domain\ValueObject\PositionY;
-use Micro\Game\Proxx\Domain\ValueObject\Proxx;
 use Micro\Game\Proxx\Domain\ValueObject\WasMarked;
 use Micro\Game\Proxx\Domain\ValueObject\WasOpened;
 use Micro\Game\Proxx\Domain\ValueObject\Width;
@@ -88,7 +87,7 @@ interface ValueObjectFactoryInterface
     /**
      * Create HasBlackHole ValueObject.
      */
-    public function makeHasBlackHole(int $hasBlackHole): HasBlackHole;
+    public function makeHasBlackHole(): HasBlackHole;
 
     /**
      * Create NumberOfBlackHolesAround ValueObject.
@@ -98,12 +97,12 @@ interface ValueObjectFactoryInterface
     /**
      * Create WasOpened ValueObject.
      */
-    public function makeWasOpened(int $wasOpened): WasOpened;
+    public function makeWasOpened(): WasOpened;
 
     /**
      * Create WasMarked ValueObject.
      */
-    public function makeWasMarked(int $wasMarked): WasMarked;
+    public function makeWasMarked(): WasMarked;
 
     /**
      * Create Board ValueObject.

@@ -5,13 +5,11 @@ declare(strict_types=1);
 namespace Micro\Game\Proxx\Domain\Event;
 
 use Assert\Assertion;
-use Assert\AssertionFailedException;
+use Micro\Game\Proxx\Domain\ValueObject\Board;
 use MicroModule\Common\Domain\Event\AbstractEvent;
 use MicroModule\Common\Domain\ValueObject\Payload;
 use MicroModule\Common\Domain\ValueObject\ProcessUuid;
 use MicroModule\Common\Domain\ValueObject\Uuid;
-use Micro\Game\Proxx\Domain\ValueObject\PositionX;
-use Micro\Game\Proxx\Domain\ValueObject\PositionY;
 
 /**
  * @class BoardCreatedEvent
@@ -21,40 +19,26 @@ use Micro\Game\Proxx\Domain\ValueObject\PositionY;
 class BoardCreatedEvent extends AbstractEvent
 {
     /**
-     * PositionX value object.
+     * Board value object.
      */
-    protected PositionX $positionX;
-
-    /**
-     * PositionY value object.
-     */
-    protected PositionY $positionY;
+    protected Board $board;
 
     /**
      * Constructor
      */
-    public function __construct(ProcessUuid $processUuid, Uuid $uuid, PositionX $positionX, PositionY $positionY, ?Payload $payload = null)
+    public function __construct(ProcessUuid $processUuid, Uuid $uuid, Board $board, ?Payload $payload = null)
     {
-		$this->positionX = $positionX;
-		$this->positionY = $positionY;
+		$this->board = $board;
 		parent::__construct($processUuid, $uuid, $payload);
         
     }
 
     /**
-     * Return PositionX value object.
+     * Return Board value object.
      */
-    public function getPositionX(): PositionX
+    public function getBoard(): Board
     {
-        return $this->positionX;
-    }
-
-    /**
-     * Return PositionY value object.
-     */
-    public function getPositionY(): PositionY
-    {
-        return $this->positionY;
+        return $this->board;
     }
 
     /**
@@ -64,13 +48,11 @@ class BoardCreatedEvent extends AbstractEvent
     {
 		Assertion::keyExists($data, 'process_uuid');
 		Assertion::keyExists($data, 'uuid');
-		Assertion::keyExists($data, 'position-x');
-		Assertion::keyExists($data, 'position-y');
+		Assertion::keyExists($data, 'board');
 		$event = new static(
 			ProcessUuid::fromNative($data['process_uuid']),
 			Uuid::fromNative($data['uuid']),
-			PositionX::fromNative($data['position-x']),
-			PositionY::fromNative($data['position-y'])
+            Board::fromNative($data['board'])
 		);
 
 		if (isset($data['payload'])) {
@@ -88,8 +70,7 @@ class BoardCreatedEvent extends AbstractEvent
 		$data = [
 			'process_uuid' => $this->getProcessUuid()->toNative(),
 			'uuid' => $this->getUuid()->toNative(),
-			'position-x' => $this->getPositionX()->toNative(),
-			'position-y' => $this->getPositionY()->toNative()
+			'board' => $this->getBoard()->toNative(),
 		];
 
 		if ($this->payload !== null) {
