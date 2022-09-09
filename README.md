@@ -6,13 +6,15 @@ Proxx game microservice
 
 - [x] Environment in Docker
 - [x] Command Bus, Event Bus
+- [x] EventSourcing
+- [x] Snapshotting
+- [x] Saga pattern
 
 ## Stack
 
 - PHP 8.1
 - PostgreSQL 14
 - Symfony 6
-
 
 ## Project Setup
 
